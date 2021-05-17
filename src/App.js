@@ -1,25 +1,36 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import KeyComponent from './Component/KeyComponent';
+import DisplayResults from './Component/DisplayResults'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(){
+    super();
+    this.state={
+      results: 'I am the result',
+      number: ''
+    }
+  }
+
+  clear=() =>{
+    this.setState({results: ''})
+  }
+   onClick=(e)=>{
+this.setState({results: e.target.name})
+
+  }
+  calculate = () =>{
+
+  }
+  render() {
+    console.log(this.onClick)
+    return (
+      <div className="App">
+        <DisplayResults results={this.state.results}/>
+        <KeyComponent onClick={this.onClick} calculate={this.calculate} clear={this.clear}/>
+      </div>
+    );
+  }
 }
 
 export default App;
