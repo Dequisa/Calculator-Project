@@ -4,7 +4,7 @@ import React from 'react';
 const DisplayResults =({results}) =>{
 // let { results } = this.props;
 return(
-    <p>{results}</p>
+    <p className='display'>{results}</p>
 )
 };
 

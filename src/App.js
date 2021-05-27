@@ -7,15 +7,16 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      input: '',
+      display: '',
       firstNumber: '',
+      secondNumber: '',
       calculation: '1',
       operationHit: false,
     }
   }
 
   clear = () => {
-    this.setState({ input: '' })
+    this.setState({ display: '' })
   }
   onChange = (e) => {
     console.log('hi')
@@ -23,40 +24,68 @@ class App extends Component {
       results: parseInt(e.target.value) 
     })
   }
+
   onClick = (e) => {
     const { input } = this.state
-    this.state.operationHit === false ? this.setState({ input: [...this.state.input] + e.target.name}) : this.setState({input: '' });
-    if (e.target.name === "+") {
-      this.setState({ operationHit: true, firstNumber: parseInt(this.state.input), calculation: 'a' })
-    } else if (e.target.name === "-") {
-      this.setState({ operationHit: true, firstNumber: input })
-    } else if (e.target.name === "x") {
-      this.setState({ operationHit: true, firstNumber: input})
-    } else if (e.target.name === "%") {
-      this.setState({ operationHit: true, firstNumber: input })
-    } else if(e.target.name === '=') {
-      this.calculate()
-    }
-    // else if (this.state.operationHit === false) {
-    //   this.setState({ 
-    //     input: [...this.state.input] + e.target.name
-    //     });
+  if (this.state.operationHit === false) {
+  this.setState({ 
+  display: [...this.state.display] + e.target.name
+  });
        
-    // }
-    console.log("input:" + this.state.input, "firstNumber:" + this.state.firstNumber, "cal:" + this.state.calculation, this.state.operationHit)
+   }else{
+     this.setState({display:''})
+     this.setState({display:[...this.state.display] + e.target.name })
+   }
+    console.log("display:" + this.state.display, "firstNumber:" + this.state.firstNumber, "cal:" + this.state.calculation, this.state.operationHit)
 
+  }
+ mathOperator =(e)=>{
+   console.log('I work')
+    // this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+    if(e.target.name === '+'){
+      this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+      this.setState({calculation: "a"})
+    }else if(e.target.name === '-'){
+      this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+      this.setState({calculation: "s"})
+    }else if(e.target.name === '*'){
+      this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+      this.setState({calculation: "m"})
+    }else if(e.target.name === '/'){
+      this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+      this.setState({calculation: "d"})
+    }
   }
 
   calculate = () => {
+    console.log('I work too')
+    this.setState({secondNumber: this.state.display})
+    if(this.state.calculation === "a"){
+      const total = parseInt(this.state.firstNumber) + parseInt(this.state.display)
+      console.log(total)
+      this.setState({display:total})
+    } else if(this.state.calculation === "s"){
+      const total = parseInt(this.state.firstNumber) - parseInt(this.state.display)
+      console.log(total)
+      this.setState({display:total})
+    } else if(this.state.calculation === "m"){
+      const total = parseInt(this.state.firstNumber) * parseInt(this.state.display)
+      console.log(total)
+      this.setState({display:total})
+    }else if(this.state.calculation === "d"){
+      const total = parseInt(this.state.firstNumber) / parseInt(this.state.display)
+      console.log(total)
+      this.setState({display:total})
+    }
 
 
   }
   render() {
-    console.log(this.state.firstNumber)
+    console.log(typeof parseInt(this.state.firstNumber),typeof parseInt(this.state.secondNumber))
     return (
       <div className="App">
-        <DisplayResults results={this.state.input} />
-        <KeyComponent onClick={this.onClick} onChange={this.onChange} calculate={this.calculate} clear={this.clear} />
+        <DisplayResults results={this.state.display} />
+        <KeyComponent onClick={this.onClick} mathOperator={this.mathOperator} calculate={this.calculate} clear={this.clear} />
       </div>
     );
   }
