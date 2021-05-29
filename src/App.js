@@ -3,82 +3,85 @@ import KeyComponent from './Component/KeyComponent';
 import DisplayResults from './Component/DisplayResults'
 import './App.css';
 
+
+function formatNumber (num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      results: '',
-      display: '',
+      results: '0',
       firstNumber: '',
-      secondNumber: '',
       calculation: '1',
       operationHit: false,
     }
   }
 
-  clear = () => {
-    this.setState({ display: '' })
+  clearResults = () => {
+    this.setState({ results: '0',firstNumber:'' })
   }
 
 
-  onClick = (e) => {
-  if (this.state.operationHit === false) {
-    const concatString = this.state.display;
-    const newDisplay =concatString.concat(e.target.name);
-    this.setState({display:newDisplay})
-    
-    
-       
+  button = (e) => {
+  if (this.state.results=== '0') {
+    this.setState({results:e.target.name})   
+   } else if(this.state.operationHit === true){
+     this.setState({operationHit: false, results: e.target.name})
    }else{
-     this.setState({display:''})
-     const concatString = this.state.display;
-     const newDisplay =concatString.concat(e.target.name);
-     this.setState({display:newDisplay})
+    const state = Number(e.target.name.replace(/\D/g, ''))
+    const nf = new Intl.NumberFormat()
+    const sum = nf.format(this.state.results + e.target.name)
+    // console.log(typeof nf.format(this.state.results + e.target.name))
+     this.setState({results: sum})
+     
    }
+  }
+
+  negative=(e)=>{
+    
   }
 
  mathOperator =(e)=>{
     if(e.target.name === '+'){
-      this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+      this.setState({operationHit:true, firstNumber: this.state.results})
       this.setState({calculation: "a"})
     }else if(e.target.name === '-'){
-      this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+      this.setState({operationHit:true, firstNumber: this.state.results})
       this.setState({calculation: "s"})
     }else if(e.target.name === '*'){
-      this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+      this.setState({operationHit:true, firstNumber: this.state.results})
       this.setState({calculation: "m"})
     }else if(e.target.name === '/'){
-      this.setState({operationHit:true, firstNumber: this.state.display, display:''})
+      this.setState({operationHit:true, firstNumber: this.state.results})
       this.setState({calculation: "d"})
     }
   }
 
   calculate = () => {
-    this.setState({secondNumber: this.state.display})
     if(this.state.calculation === "a"){
-      const total = parseInt(this.state.firstNumber) + parseInt(this.state.display)
-      this.setState({display:total})
-      this.setState({results:this.state.display})
+      const total = Number(this.state.firstNumber) + Number(this.state.results)
+      this.setState({results:total, firstNumber:'', operationHit:true})
     } else if(this.state.calculation === "s"){
-      const total = parseInt(this.state.firstNumber) - parseInt(this.state.display)
-      this.setState({display:total})
-      this.setState({results:this.state.display})
+      const total = Number(this.state.firstNumber) - Number(this.state.results)
+      this.setState({results:total, firstNumber:'', operationHit:true})
     } else if(this.state.calculation === "m"){
-      const total = parseInt(this.state.firstNumber) * parseInt(this.state.display)
-      this.setState({display:total})
-      this.setState({results:this.state.display})
+      const total = Number(this.state.firstNumber) * Number(this.state.results)
+      this.setState({results:total, firstNumber:'', operationHit:true})
     }else if(this.state.calculation === "d"){
-      const total = parseInt(this.state.firstNumber) / parseInt(this.state.display)
-      this.setState({display:total})
-      this.setState({results:this.state.display})
+      const total = Number(this.state.firstNumber) / Number(this.state.results)
+      this.setState({results:total, firstNumber:'', operationHit:true})
     }
 
   }
   render() {
+    const { results}=this.state
+    console.log(-results)
+    const addCommons = (this.state.results).toLocaleString()
     return (
       <div className="App">
-        <DisplayResults results={this.state.results} />
-        <KeyComponent onClick={this.onClick} mathOperator={this.mathOperator} calculate={this.calculate} clear={this.clear} />
+        <DisplayResults results={addCommons} />
+        <KeyComponent onClick={this.button} mathOperator={this.mathOperator} calculate={this.calculate} clear={this.clearResults} />
       </div>
     );
   }
