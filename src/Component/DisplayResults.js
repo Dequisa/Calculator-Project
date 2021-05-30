@@ -2,9 +2,10 @@ import React from 'react';
 
 
 const DisplayResults =({results}) =>{
-// let { results } = this.props;
+    console.log(results)
+const parseNumber = new Intl.NumberFormat().format(results)
 return(
-    <p className='display'>{results}</p>
+    <p className='display'>{parseNumber}</p>
 )
 };
 

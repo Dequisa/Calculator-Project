@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("https://i.insider.com/5ce2c70d021b4c18136d6a66");
+background-repeat: no-repeat;
+width: 70%;
 }
 
 code {

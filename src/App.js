@@ -33,7 +33,8 @@ class App extends Component {
     const nf = new Intl.NumberFormat()
     const sum = nf.format(this.state.results + e.target.name)
     // console.log(typeof nf.format(this.state.results + e.target.name))
-     this.setState({results: sum})
+     this.setState({results: this.state.results + e.target.name})
+     
      
    }
   }
@@ -77,10 +78,9 @@ class App extends Component {
   render() {
     const { results}=this.state
     console.log(-results)
-    const addCommons = (this.state.results).toLocaleString()
     return (
       <div className="App">
-        <DisplayResults results={addCommons} />
+        <DisplayResults results={results} />
         <KeyComponent onClick={this.button} mathOperator={this.mathOperator} calculate={this.calculate} clear={this.clearResults} />
       </div>
     );

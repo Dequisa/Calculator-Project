@@ -1,15 +1,19 @@
 .App{
   border: solid black 2px;
-  width: 40%;
+  background-color: grey;
+  opacity: 0.9;
   text-align: center;
   display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 5%;
+    display: grid;
+    max-width: 378px;
 }
 .button{
     display: grid;
     grid-template-columns: 95px 95px 95px 95px;
+    background-color: rgb(156, 148, 148);
 }
 .one{
     grid-row: 1;
@@ -50,5 +54,9 @@
 }
 .display{
     text-align: right;
-    font-size: large;
+    font-size: 23px;
+    padding-right: 17px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+
 }
